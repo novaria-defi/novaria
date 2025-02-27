@@ -3,7 +3,7 @@
 ## 📌 Introduction
 Novaria's smart contracts serve as the backbone of the protocol, enabling yield tokenization and seamless on-chain interactions. Built using Foundry, these contracts facilitate efficient, decentralized, and secure yield management.
 
-![Novaria Assets](https://drive.google.com/drive/folders/1YlaJphNeCbffn4wdI0lSI1AVSE5AvQCQ?usp=sharing)
+![Novaria Assets](frontend/src/assets/workflow.jpg)
 
 ## 🏗 Project Structure
 The smart contract repository consists of the following key components:
