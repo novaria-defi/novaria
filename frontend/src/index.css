@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-main: #17e3c2;
+  --color-turqoise: #00b9dc;
+  --color-turquoise-50: #eefffa;
+  --color-turquoise-100: #c6fff2;
+  --color-turquoise-200: #8effe7;
+  --color-turquoise-300: #4dfbd9;
+  --color-turquoise-400: #17e3c2;
+  --color-turquoise-500: #01cbae;
+  --color-turquoise-600: #00a48f;
+  --color-turquoise-700: #038273;
+  --color-turquoise-800: #08675e;
+  --color-turquoise-900: #0c554d;
+  --color-turquoise-950: #003431;
+}
+
