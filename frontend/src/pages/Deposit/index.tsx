@@ -152,16 +152,15 @@ export const PopupDetail = ({ handleClosePopup }: PopupDetailProps) => {
               <div className="flex justify-between">
                 <div className="flex gap-2">
                   <img
-                    src="https://storage.googleapis.com/prod-pendle-bucket-a/images/uploads/2dae1fc4-645b-4278-9a45-e3708f9463da.svg"
-                    alt="LBTC (Corn)"
+                    src="https://dynamic-assets.coinbase.com/e785e0181f1a23a30d9476038d9be91e9f6c63959b538eabbc51a1abc8898940383291eede695c3b8dfaa1829a9b57f5a2d0a16b0523580346c6b8fab67af14b/asset_icons/b57ac673f06a4b0338a596817eb0a50ce16e2059f327dc117744449a47915cb2.png"
+                    alt="BTC"
                     className="size-9"
                   />
                   <div className="flex flex-col gap-1">
-                    <p className="text-xl font-semibold">LBTC (Corn)</p>
+                    <p className="text-xl font-semibold">BTC</p>
                     <p className="text-xs text-white/50">
-                      LBTC (Corn) is a Bitcoin-pegged token on the Layer 2 Lightning Network,{" "}
-                      <br></br>
-                      enabling fast and low-cost BTC transactions.
+                      BTC is Bitcoin, enabling secure and decentralized transactions on the
+                      blockchain.
                     </p>
                   </div>
                 </div>
@@ -235,10 +234,10 @@ interface TableProps {
 export const Table = ({ handleOpenPopup }: TableProps) => {
   const items = [
     {
-      id: "lbtc",
-      label: "LBTC (Corn)",
+      id: "btc",
+      label: "BTC",
       imgUrl:
-        "https://storage.googleapis.com/prod-pendle-bucket-a/images/uploads/2dae1fc4-645b-4278-9a45-e3708f9463da.svg",
+        "https://dynamic-assets.coinbase.com/e785e0181f1a23a30d9476038d9be91e9f6c63959b538eabbc51a1abc8898940383291eede695c3b8dfaa1829a9b57f5a2d0a16b0523580346c6b8fab67af14b/asset_icons/b57ac673f06a4b0338a596817eb0a50ce16e2059f327dc117744449a47915cb2.png",
       date: "2025 Dec 31",
       liquidity: "$9.1M",
       leverage: "20x",
@@ -250,10 +249,10 @@ export const Table = ({ handleOpenPopup }: TableProps) => {
       ptAmount: "$2.283",
     },
     {
-      id: "ethy",
-      label: "ETH Yield",
+      id: "eth",
+      label: "ETH",
       imgUrl:
-        "https://storage.googleapis.com/prod-pendle-bucket-a/images/uploads/570f3075-22bd-498b-a489-d930d5741222.svg",
+        "https://dynamic-assets.coinbase.com/dbb4b4983bde81309ddab83eb598358eb44375b930b94687ebe38bc22e52c3b2125258ffb8477a5ef22e33d6bd72e32a506c391caa13af64c00e46613c3e5806/asset_icons/4113b082d21cc5fab17fc8f2d19fb996165bcce635e6900f7fc2d57c4ef33ae9.png",
       date: "2025 Nov 30",
       liquidity: "$12.5M",
       leverage: "15x",
@@ -265,10 +264,10 @@ export const Table = ({ handleOpenPopup }: TableProps) => {
       ptAmount: "$3.145",
     },
     {
-      id: "btcplus",
-      label: "BTC+ Staking",
+      id: "sol",
+      label: "SOL",
       imgUrl:
-        "https://storage.googleapis.com/prod-pendle-bucket-a/images/uploads/58077c4d-c0ee-4412-909b-ae860bd74252.svg",
+        "https://asset-metadata-service-production.s3.amazonaws.com/asset_icons/b658adaf7913c1513c8d120bcb41934a5a4bf09b6adbcb436085e2fbf6eb128c.png",
       date: "2025 Oct 15",
       liquidity: "$7.8M",
       leverage: "25x",
@@ -280,10 +279,10 @@ export const Table = ({ handleOpenPopup }: TableProps) => {
       ptAmount: "$2.019",
     },
     {
-      id: "liq",
-      label: "Liquid Bera",
+      id: "tia",
+      label: "Celestia",
       imgUrl:
-        "https://storage.googleapis.com/prod-pendle-bucket-a/images/uploads/3a2ee3bb-c89e-45b9-b814-8285d98fa02e.svg",
+        "https://dynamic-assets.coinbase.com/93f5c37c0950575eeaea5adf840629c3eb17b426f170f86f9bbafe025d504fda1f491ff3b839f85461b6f9f14a0a5eeb7f63df5ecd6eb412f0f839a0bae80137/asset_icons/647c4333b5f51fdab5b8769cb6f2d2a554612b94bf1d18c5d7834ee644580f73.png",
       date: "2025 Sep 10",
       liquidity: "$5.3M",
       leverage: "12x",
@@ -295,10 +294,10 @@ export const Table = ({ handleOpenPopup }: TableProps) => {
       ptAmount: "$4.009",
     },
     {
-      id: "usdtf",
-      label: "USDT Farming",
+      id: "bera",
+      label: "BERA",
       imgUrl:
-        "https://storage.googleapis.com/prod-pendle-bucket-a/images/uploads/eec40602-0d7a-4be2-9f86-0fc70ab2e579.svg",
+        "https://asset-metadata-service-production.s3.amazonaws.com/asset_icons/f267cd737549fb184e0b8a55b3ca9db5f91f90db499260ed06affde20680a38b.png",
       date: "2026 Jan 20",
       liquidity: "$20.4M",
       leverage: "10x",
@@ -310,10 +309,10 @@ export const Table = ({ handleOpenPopup }: TableProps) => {
       ptAmount: "$5.781",
     },
     {
-      id: "teth",
-      label: "tETH",
+      id: "doge",
+      label: "DOGE",
       imgUrl:
-        "https://storage.googleapis.com/prod-pendle-bucket-a/images/uploads/fa993241-8060-4e41-a24a-31d6bb3f25f7.svg",
+        "https://dynamic-assets.coinbase.com/3803f30367bb3972e192cd3fdd2230cd37e6d468eab12575a859229b20f12ff9c994d2c86ccd7bf9bc258e9bd5e46c5254283182f70caf4bd02cc4f8e3890d82/asset_icons/1597d628dd19b7885433a2ac2d7de6ad196c519aeab4bfe679706aacbf1df78a.png",
       date: "2025 Aug 05",
       liquidity: "$6.7M",
       leverage: "18x",
@@ -351,7 +350,7 @@ export const Table = ({ handleOpenPopup }: TableProps) => {
               <td className="relative z-1 h-12 w-full px-8 pl-0 py-3">
                 <div className="cursor-pointer">
                   <div className="relative flex items-center gap-4">
-                    <img src={item.imgUrl} alt="LBTC (Corn)" className="size-9" />
+                    <img src={item.imgUrl} alt="BTC" className="size-9" />
                     <div className="flex flex-col">
                       <span className="relative leading-tight group-hover:font-semibold">
                         <span className="absolute blur inset-0 opacity-0 group-hover:opacity-100">
