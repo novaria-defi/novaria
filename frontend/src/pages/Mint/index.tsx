@@ -133,6 +133,7 @@ export const Mint = () => {
         >
           Mint
         </button>
+        <div className="text-xs text-white/50 text-center">powered by GTX CLOB dex</div>
       </div>
     </>
   )
