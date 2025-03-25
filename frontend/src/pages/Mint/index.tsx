@@ -34,11 +34,13 @@ export const Mint = () => {
     writeContractAsync,
   } = useWriteContract()
 
+  const decimals = 18; // Change this based on your token decimals
+  const scaledAmount = mintAmount ? BigInt(Math.round(mintAmount * 10 ** decimals)) : BigInt(0);
   const simulateResult = useSimulateContract({
     abi: mockVault,
     address: FUNDING_VAULT_ADDRESS,
     functionName: "deposit",
-    args: [BigInt(mintAmount)],
+    args: [scaledAmount],
   })
 
   const { isLoading, isSuccess: _ } = useWaitForTransactionReceipt({
@@ -90,7 +92,7 @@ export const Mint = () => {
               if (currentBalance < 0) {
                 return
               }
-              setMintAmount(Number(value))
+              setMintAmount(Number(value) ? Number(value) : 0)
             }}
           />
           <p className="text-xs text-white/50">
@@ -129,7 +131,7 @@ export const Mint = () => {
         <button
           className="w-full border border-main/50 bg-main/10 px-4 py-2 rounded-lg text-sm text-white cursor-pointer hover:border-main hover:bg-main/40 transition-all disabled:opacity-50"
           onClick={handleMintAndApprove}
-          disabled={mintAmount < 1}
+          // disabled={mintAmount < 1}
         >
           Mint
         </button>

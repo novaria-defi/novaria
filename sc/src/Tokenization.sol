@@ -8,7 +8,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 contract NOVA is ERC20 {
     constructor() ERC20("NOVA", "NOVA") {
         // Mint 1,000,000 NOVA (dengan 18 decimals)
-        _mint(msg.sender, 1e18);
+        _mint(msg.sender, 1_000_000 * 1e18);
     }
 }
 
