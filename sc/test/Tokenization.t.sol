@@ -42,15 +42,90 @@ contract TokenizationTest is Test {
         // Tokenize NOVA
         tokenization.tokenizeNOVA();
 
-        // check initial balances
-        uint256 initialNovaBalance = nova.balanceOf(user);
-        uint256 initialPtBalance = ptNova.balanceOf(user);
-        uint256 initialYtBalance = ytNova.balanceOf(user);
+        // Check balances after tokenization
+        uint256 novaBalance = nova.balanceOf(user);
+        uint256 ptBalance = ptNova.balanceOf(user);
+        uint256 ytBalance = ytNova.balanceOf(user);
 
-        console.log("Nova balance: ", initialNovaBalance);
-        console.log("PT Nova balance: ", initialPtBalance);
-        console.log("YT Nova balance: ", initialYtBalance);
+        // Verify NOVA was transferred to contract
+        assertEq(novaBalance, 0, "User should have 0 NOVA after tokenization");
+        assertEq(nova.balanceOf(address(tokenization)), NOVA_AMOUNT, "Contract should have received NOVA");
+
+        // Verify PT and YT tokens were minted correctly
+        assertEq(ptBalance, NOVA_AMOUNT, "PT balance should be equal to NOVA amount");
+        assertEq(ytBalance, (NOVA_AMOUNT * 10) / 100, "YT balance should be 10% of NOVA amount");
 
         vm.stopPrank();
+    }
+
+    function test_tokenizeNOVA_InsufficientApproval() public {
+        vm.startPrank(user);
+
+        // Approve less than required amount
+        nova.approve(address(tokenization), NOVA_AMOUNT - 1);
+
+        // Should revert due to insufficient approval
+        vm.expectRevert();
+        tokenization.tokenizeNOVA();
+
+        vm.stopPrank();
+    }
+
+    function test_tokenizeNOVA_InsufficientBalance() public {
+        vm.startPrank(user);
+
+        // Transfer NOVA back to owner
+        nova.transfer(owner, NOVA_AMOUNT);
+
+        // Approve full amount but user has no balance
+        nova.approve(address(tokenization), NOVA_AMOUNT);
+
+        // Should revert due to insufficient balance
+        vm.expectRevert();
+        tokenization.tokenizeNOVA();
+
+        vm.stopPrank();
+    }
+
+    function test_tokenizeNOVA_Reentrancy() public {
+        // Deploy a malicious contract that attempts to re-enter
+        ReentrancyAttacker attacker = new ReentrancyAttacker(address(nova), address(tokenization));
+
+        // Transfer NOVA to attacker
+        vm.startPrank(owner);
+        nova.transfer(address(attacker), NOVA_AMOUNT);
+        vm.stopPrank();
+
+        // Approve from attacker
+        vm.startPrank(address(attacker));
+        nova.approve(address(tokenization), NOVA_AMOUNT);
+
+        // Should not revert due to reentrancy guard
+        tokenization.tokenizeNOVA();
+
+        vm.stopPrank();
+    }
+}
+
+// Helper contract for reentrancy testing
+contract ReentrancyAttacker {
+    NOVA public nova;
+    Tokenization public tokenization;
+
+    constructor(address _nova, address _tokenization) {
+        nova = NOVA(_nova);
+        tokenization = Tokenization(_tokenization);
+    }
+
+    function attack() external {
+        nova.approve(address(tokenization), 50_000 * 1e18);
+        tokenization.tokenizeNOVA();
+    }
+
+    receive() external payable {
+        // Try to re-enter if we still have NOVA
+        if (nova.balanceOf(address(this)) > 0) {
+            tokenization.tokenizeNOVA();
+        }
     }
 }
