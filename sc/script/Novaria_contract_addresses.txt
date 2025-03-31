@@ -12,7 +12,6 @@ NOVARIA CA:0x973cbbd18F7d6743d1b7D43130665e02B8670E01
 PTNova CA:0xd626c40bbBEa16EdA03aD67976c26A53Eb85ACde
 YTNova CA:0xa098cF69199bF6FF2D5439C3ba2Ade4B7Ee8Ea2F
 
-etherscan api key 9JU7DCKYHRH8WWC9HX4RW8EMFV3SK8UK6H
 
 
 forge create sc/src/YieldToken.sol:YTNova --private-key <privatekey> --rpc-url https://arbitrum-sepolia.gateway.tenderly.co --constructor-args 0xd626c40bbBEa16EdA03aD67976c26A53Eb85ACde --verify --broadcast
