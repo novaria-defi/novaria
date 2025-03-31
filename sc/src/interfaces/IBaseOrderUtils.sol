@@ -55,4 +55,16 @@ interface IBaseOrderUtils {
         uint256 minOutputAmount;
         uint256 validFromTime;
     }
+
+    function createOrder(
+        CreateOrderParams memory params
+    ) external payable returns (bytes32);
+
+    function sendTokens(
+        address token,
+        address receiver,
+        uint256 amount
+    ) external;
+
+    function sendWnt(address receiver, uint256 amount) external payable;
 }

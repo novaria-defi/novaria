@@ -25,17 +25,6 @@ contract VaultShort {
     ) public payable returns (bytes32) {
         IERC20(collateralToken).transferFrom(msg.sender, address(this), amount);
 
-        IExchangeRouter(EXCHANGE_ROUTER).sendWnt{value: msg.value}(
-            ORDER_VAULT,
-            msg.value
-        );
-
-        IERC20(collateralToken).approve(ROUTER, amount);
-        IExchangeRouter(EXCHANGE_ROUTER).sendTokens(
-            collateralToken,
-            ORDER_VAULT,
-            amount
-        );
 
         address[] memory swapPaths = new address[](1);
         swapPaths[0] = MARKET_TOKEN;

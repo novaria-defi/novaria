@@ -1,0 +1,1 @@
+{"id":"021914df95eb1601ca62e3424d14d0af","source_id_to_path":{"0":"node_modules/@openzeppelin/contracts/interfaces/IERC20.sol","1":"node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol","2":"sc/src/Chain.sol","3":"sc/src/Order.sol","4":"sc/src/interfaces/ArbSys.sol","5":"sc/src/interfaces/IBaseOrderUtils.sol","6":"sc/src/mocks/MockGMX.sol"},"language":"Solidity"}
