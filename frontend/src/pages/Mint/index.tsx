@@ -60,6 +60,7 @@ export const Mint = () => {
         })
 
         toast.success(`Success Mint. Trx ID: ${res} 🪙🪙🪙`)
+        setMintAmount(0)
       })
       .catch(err => {
         console.error(err)

@@ -1,14 +1,17 @@
-import { useWaitForTransactionReceipt, useWriteContract } from "wagmi"
-import mockErc20 from "@/data/mockERC20.json"
-import mockVault from "@/data/mockVault.json"
+import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
+import { mockErc20Abi } from "@/lib/abis/mockErc20"
 import { Input, NovariaTokenLogo } from "@/components/ui/Input"
 import ClockIcon from "@/components/icon/ClockIcon"
 import FuelIcon from "@/components/icon/FuelIcon"
-import { FUNDING_VAULT_ADDRESS, PRINCIPLE_TOKEN_ADDRESS } from "@/utils/constants"
+import { MOCK_TOKEN_ADDRESS, NOVATOKEN_CA, PRINCIPLE_TOKEN_ADDRESS } from "@/utils/constants"
 import { useState } from "react"
 import { ChartComponent } from "@/components/ui/ChartComponent"
 import { toast } from "sonner"
 import Preloader from "@/components/Preloader"
+import { mockPTAbi } from "@/lib/abis/mockPTAbi"
+import { mockNovaAbi } from "@/lib/abis/mockNovaAbi"
+
+const EXECUTION_FEE = 1e16
 
 export const Deposit = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -57,24 +60,24 @@ export const PopupDetail = ({ handleClosePopup }: PopupDetailProps) => {
     hash: hash,
   })
 
-  const [input, setInput] = useState("")
+  const [input, setInput] = useState<number>(0)
 
   const handleApproveAndDeposit = async () => {
     await writeContractAsync({
-      abi: mockErc20,
-      address: FUNDING_VAULT_ADDRESS,
+      abi: mockNovaAbi,
+      address: NOVATOKEN_CA,
       functionName: "approve",
-      args: [PRINCIPLE_TOKEN_ADDRESS, BigInt(100)],
+      args: [PRINCIPLE_TOKEN_ADDRESS, 20],
     })
       .then(async () => {
         await writeContractAsync({
-          abi: mockVault,
+          abi: mockPTAbi,
           address: PRINCIPLE_TOKEN_ADDRESS,
           functionName: "deposit",
-          args: [BigInt(100)],
+          args: [20],
         })
 
-        toast.success(`Success Deposit PT: 100 YT: 100`)
+        toast.success(`Success Deposit PT: ${input} YT: ${input}`)
       })
       .catch(err => {
         console.error(err)
@@ -95,7 +98,7 @@ export const PopupDetail = ({ handleClosePopup }: PopupDetailProps) => {
                   <div className="text-start w-full text-lg font-semibold mb-2">Input</div>
                   <Input
                     value={input}
-                    onChange={e => setInput(e.target.value)}
+                    onChange={e => setInput(Number(e.target.value))}
                     icon={<NovariaTokenLogo />}
                   />
                 </div>
@@ -131,13 +134,6 @@ export const PopupDetail = ({ handleClosePopup }: PopupDetailProps) => {
                 </div>
 
                 <div className="flex flex-col gap-2 w-full">
-                  {/* <button
-                  className="border border-main/50 bg-main/10 px-4 py-2 rounded-lg text-sm text-white cursor-pointer hover:border-main hover:bg-main/40 transition-all disabled:opacity-50"
-                  onClick={handleApprove}
-                  disabled={!input || isPending}
-                >
-                  Approval
-                </button> */}
                   <button
                     className="border border-main/50 bg-main/10 px-4 py-2 rounded-lg text-sm text-white cursor-pointer hover:border-main hover:bg-main/40 transition-all disabled:opacity-50"
                     onClick={handleApproveAndDeposit}
