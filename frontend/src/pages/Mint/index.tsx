@@ -4,27 +4,29 @@ import FuelIcon from "@/components/icon/FuelIcon"
 import PercentIcon from "@/components/icon/Percent"
 import Preloader from "@/components/Preloader"
 import { Input, NovariaTokenLogo, WBTCTokenLogo } from "@/components/ui/Input"
-import mockErc20 from "@/data/mockERC20.json"
-import mockVault from "@/data/mockVault.json"
-import { FUNDING_VAULT_ADDRESS, MOCK_TOKEN_ADDRESS } from "@/utils/constants"
-import { useEffect, useState } from "react"
+import { mockWBTCAbi } from "@/lib/abis/mockWbtcAbi"
+import { novariaAbi } from "@/lib/abis/NovariaAbi"
+import { NOVARIA_CA, WBTC_CA } from "@/utils/constants"
+import { separateByDot } from "@/utils/helper"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
-import {
-  useWriteContract,
-  useWaitForTransactionReceipt,
-  useAccount,
-  useReadContract,
-  useSimulateContract,
-} from "wagmi"
+import { useWriteContract, useWaitForTransactionReceipt, useAccount, useReadContract } from "wagmi"
+
+const EXECUTION_FEE = 1e16
 
 export const Mint = () => {
   const [mintAmount, setMintAmount] = useState<number>(0)
+  const mintAmountValue = useRef<number>(0)
+
+  useEffect(() => {
+    mintAmountValue.current = mintAmount
+  }, [mintAmount])
 
   const { address } = useAccount()
 
   const { data: mockBalance } = useReadContract({
-    abi: mockErc20,
-    address: MOCK_TOKEN_ADDRESS,
+    abi: mockWBTCAbi,
+    address: WBTC_CA,
     functionName: "balanceOf",
     args: [address],
   })
@@ -35,13 +37,6 @@ export const Mint = () => {
     writeContractAsync,
   } = useWriteContract()
 
-  const simulateResult = useSimulateContract({
-    abi: mockVault,
-    address: FUNDING_VAULT_ADDRESS,
-    functionName: "deposit",
-    args: [BigInt(mintAmount)],
-  })
-
   const { isLoading, isSuccess: _ } = useWaitForTransactionReceipt({
     hash: transactionHash,
   })
@@ -49,29 +44,28 @@ export const Mint = () => {
   const handleMintAndApprove = async () => {
     // Approve
     writeContractAsync({
-      abi: mockErc20,
-      address: MOCK_TOKEN_ADDRESS,
+      abi: mockWBTCAbi,
+      address: WBTC_CA,
       functionName: "approve",
-      args: [FUNDING_VAULT_ADDRESS, BigInt(mintAmount)],
+      args: [NOVARIA_CA, mintAmountValue.current],
     })
       .then(async () => {
         // Mint
-        await writeContractAsync({
-          abi: mockVault,
-          address: FUNDING_VAULT_ADDRESS,
-          functionName: "deposit",
-          args: [BigInt(mintAmount)],
+        const res = await writeContractAsync({
+          address: NOVARIA_CA,
+          abi: novariaAbi,
+          functionName: "createOrder",
+          args: [mintAmountValue.current, WBTC_CA, 5n, true],
+          value: BigInt(EXECUTION_FEE),
         })
 
-        toast.success(`Success Mint ${mintAmount} 🪙🪙🪙`)
+        toast.success(`Success Mint. Trx ID: ${res} 🪙🪙🪙`)
       })
       .catch(err => {
         console.error(err)
         toast.error("Errror Mint Token")
       })
   }
-
-  useEffect(() => {}, [simulateResult])
 
   return (
     <>
@@ -95,8 +89,7 @@ export const Mint = () => {
             }}
           />
           <p className="text-xs text-white/50">
-            Your Balance {Number(mockBalance) / 1e18}
-            {/* Your Balance {Number(mockBalance) / 1e18 - mintAmount} */}
+            Your Balance {separateByDot(Number(mockBalance ?? 0) / 1e18)} WBTC
           </p>
         </div>
 
