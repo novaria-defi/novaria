@@ -1,6 +1,6 @@
-import React, { useEffect } from "react"
-import mockErc20 from "@/data/mockERC20.json"
-import { MOCK_TOKEN_ADDRESS } from "@/utils/constants"
+import { useEffect } from "react"
+import { mockWBTCAbi } from "@/lib/abis/mockWbtcAbi"
+import { WBTC_CA } from "@/utils/constants"
 import { useAccount, useWriteContract } from "wagmi"
 import Preloader from "@/components/Preloader"
 import { toast } from "sonner"
@@ -13,8 +13,8 @@ const Faucet = () => {
 
   const handleFaucet = () => {
     writeContract({
-      abi: mockErc20,
-      address: MOCK_TOKEN_ADDRESS,
+      abi: mockWBTCAbi,
+      address: WBTC_CA,
       functionName: "mint",
       args: [address, BigInt(1000e18)],
     })
