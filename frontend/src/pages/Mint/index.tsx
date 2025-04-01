@@ -1,6 +1,7 @@
 import ArrowDownIcon from "@/components/icon/ArrowDownIcon"
 import ClockIcon from "@/components/icon/ClockIcon"
 import FuelIcon from "@/components/icon/FuelIcon"
+import PercentIcon from "@/components/icon/Percent"
 import Preloader from "@/components/Preloader"
 import { Input, NovariaTokenLogo, WBTCTokenLogo } from "@/components/ui/Input"
 import mockErc20 from "@/data/mockERC20.json"
@@ -94,7 +95,8 @@ export const Mint = () => {
             }}
           />
           <p className="text-xs text-white/50">
-            Your Balance {Number(mockBalance) / 1e18 - mintAmount}
+            Your Balance {Number(mockBalance) / 1e18}
+            {/* Your Balance {Number(mockBalance) / 1e18 - mintAmount} */}
           </p>
         </div>
 
@@ -123,6 +125,14 @@ export const Mint = () => {
             </span>
 
             <p className="text-sm">0.001</p>
+          </div>
+          <div className="p-2 w-full rounded-2xl flex items-center justify-between">
+            <span className="flex gap-2 text-white/50">
+              <PercentIcon />
+              <p className="text-sm">Current Funding Rate</p>
+            </span>
+
+            <p className="text-sm">10%</p>
           </div>
         </div>
 
