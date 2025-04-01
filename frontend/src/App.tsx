@@ -5,8 +5,9 @@ import { Deposit } from "./pages/Deposit"
 // import { Tokenize } from "./pages/Tokenize"
 import { Mint } from "./pages/Mint"
 import { Swap } from "./pages/Swap"
-import Faucet from "./pages/Faucet"
 import { Toaster } from "sonner"
+import { Bridge } from "./pages/Bridge"
+import Faucet from "./pages/Faucet"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/deposit" element={<Deposit />} />
           <Route path="/swap" element={<Swap />} />
           <Route path="/faucet" element={<Faucet />} />
+          <Route path="/bridge" element={<Bridge />} />
         </Routes>
       </Layout>
       <Toaster />

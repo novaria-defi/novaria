@@ -1,6 +1,6 @@
 import { PRINCIPLE_TOKEN_ADDRESS, YIELD_TOKEN_ADDRESS } from "@/utils/constants"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
-import clsx from "clsx"
+import { clsx } from "clsx"
 import { useAccount, useReadContract } from "wagmi"
 import mockErc20 from "@/data/mockERC20.json"
 
@@ -95,7 +95,7 @@ export const ConnectWalletButton = () => {
                     // onClick={openChainModal}
                     className="relative bg-zinc-800 text-teal-200 cursor-pointer font-semibold flex items-center gap-2 rounded-full border border-teal-600 px-4 py-2"
                   >
-                    {`PT ${Number(ptBalance)} / YT ${Number(ytBalance)}`}
+                    {`PT ${Number(ptBalance ?? 0)} / YT ${Number(ytBalance ?? 0)}`}
                   </button>
                   {/* <button
                     onClick={openChainModal}
